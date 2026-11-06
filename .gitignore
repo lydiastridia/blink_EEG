@@ -1,0 +1,7 @@
+# Participant data must never be uploaded to GitHub.
+Data/
+
+# MATLAB and macOS clutter
+*.asv
+*.m~
+.DS_Store
