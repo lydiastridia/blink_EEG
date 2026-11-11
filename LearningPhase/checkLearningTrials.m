@@ -5,6 +5,8 @@
 % 3 -> whether the transition probabilities are uniform in every miniblock
 % 4 -> whether T2 appears equally often at both T2 locations
 
+function [ok] = checkLearningTrials(trials, params)
+
 kinds = params.design.kinds;
 nKinds = length(kinds);
 typeNames = {'valid', 'control', 'T1absent', 'omission', 'controlOmission'};
