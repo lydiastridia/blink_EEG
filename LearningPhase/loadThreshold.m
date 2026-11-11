@@ -7,7 +7,10 @@ function [maskContrast] = loadThreshold(subjectNum, sessionNum)
 
 repoRoot = fileparts(fileparts(mfilename('fullpath')));
 calibrationDir = fullfile(repoRoot, 'Data', 'Calibration');
-fileName = sprintf('P%d_S%d_threshold.mat', subjectNum, sessionNum);
+if isnumeric(subjectNum)
+    subjectNum = num2str(subjectNum);
+end
+fileName = sprintf('P%s_S%d_threshold.mat', subjectNum, sessionNum);
 thresholdFile = fullfile(calibrationDir, fileName);
 
 % In case of an error if the calibration has not been run yet or if the value was not saved,
