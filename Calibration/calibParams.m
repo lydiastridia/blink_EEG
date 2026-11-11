@@ -6,7 +6,7 @@ function [params] = calibParams()
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Testing
-params.testMode = false; %true on my laptop: skips the Psychtoolbox timing tests and prints every trial
+params.testMode = true; %true on my laptop: skips the Psychtoolbox timing tests and prints every trial
                         %!!!!! MUST be false in the lab (accurate 16.7 ms timing)
 params.debugWindow = false; %true: semi-transparent window (for debugging only)
 params.debugOpacity = 0.85;
