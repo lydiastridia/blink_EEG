@@ -51,4 +51,13 @@ params.timing.delay = round(params.stiming.delay / params.timing.refreshRate); %
 % true = T2 is followed by the same mask as T1 (as in the manuscript)
 params.learn.maskT2 = false;
 
+%% Questions after each trial (letter version of the original code)
+params.stim.letters = 'aefgiklmorsuwxyz'; %16 letters, one per position; shuffled on every trial
+params.stim.letterSize = 35; %text size of the letters
+params.text.loc1 = '1?'; %shown in the centre: where was target 1?
+params.text.loc2 = '2?'; %where was target 2?
+params.text.vis1 = 'Seen 1?\n\n1   2   3   4';
+params.text.vis2 = 'Seen 2?\n\n1   2   3   4';
+params.stiming.afterResponse = 0.35; %short wait after each answer (original code)
+
 end
