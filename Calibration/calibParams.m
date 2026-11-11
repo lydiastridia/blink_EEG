@@ -6,7 +6,7 @@ function [params] = calibParams()
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Testing
-params.testMode = true; %true on my laptop: skips the Psychtoolbox timing tests and prints every trial
+params.testMode = false; %true on my laptop: skips the Psychtoolbox timing tests and prints every trial
                         %!!!!! MUST be false in the lab (accurate 16.7 ms timing)
 params.debugWindow = false; %true: semi-transparent window (for debugging only)
 params.debugOpacity = 0.85;
@@ -82,7 +82,7 @@ params.trials.propAbsent = 0.2; %20% target-absent trials -> 20 (100 trials in t
 params.cal.startContrast = [0.95 0.05]; %starting mask contrasts of staircase a and staircase b
 params.cal.bigStep = 0.2; %step at the start ...
 params.cal.smallStep = 0.05; %... and after enough reversals
-params.cal.nReversalsSmallStep = 3; %manuscript: small steps "as soon as there had been at least
+params.cal.nReversalsSmallStep = 2; %manuscript: small steps "as soon as there had been at least
                                     %three switches" (original code: 2)
 params.cal.reversalAtBounds = true; %original code: a trial at mask contrast 0 or 1 also counts as
                                     %a reversal (manuscript: only switches seen <-> unseen -> false)
