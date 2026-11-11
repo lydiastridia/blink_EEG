@@ -73,7 +73,7 @@ params.stim.maskSpace = 9; %distance from the target center to a mask element
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Trials
 %Target-present trials = targetPositions x nTrialsPerPosition.
-%The trials come in rounds: each round shows every position once.
+%All trials are shuffled together, as in the original code.
 params.trials.nTrialsPerPosition = 5; %16 x 5 = 80 target-present trials
 params.trials.propAbsent = 0.2; %20% target-absent trials -> 20 (100 trials in total)
 
