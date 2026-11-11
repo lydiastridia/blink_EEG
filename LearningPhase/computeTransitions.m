@@ -2,7 +2,7 @@
 % transMat(a,b) = nr of times that kind b came directly after kind a
 % if transition probs are uniform, then all of the numbers in the table should be equal
 
-function [transMat] = computeTransition(order, nKinds)
+function [transMat] = computeTransitions(order, nKinds)
 
 transMat = zeros(nKinds, nKinds);
 
