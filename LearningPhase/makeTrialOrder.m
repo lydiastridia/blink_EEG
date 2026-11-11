@@ -13,9 +13,10 @@ nTransitions = nKinds * nKinds;
 finished = false;
 
 while ~finished
-    used = zeros(nKinds, nKinds); % used(a,b)=1 means that kind b has alr been fllwd by kind a
+    used = zeros(nKinds, nKinds); % used(a,b)=1 means that kind a has alr been fllwd by kind b
     order = zeros(1, nTransitions + 1);
-    stuck = false:
+    order(1) = firstKind;
+    stuck = false;
 
     for triali = 2 : nTransitions + 1
         current = order(triali - 1);
