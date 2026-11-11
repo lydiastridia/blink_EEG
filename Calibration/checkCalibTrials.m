@@ -1,6 +1,5 @@
 %Purpose: This function checks that the target appears equally often at every
-%position: it prints the number of trials per position and checks that every
-%round contains every position exactly once.
+%position: it prints the number of trials per position.
 %Can also be run on its own:
 %   params = calibParams; checkCalibTrials(makeCalibTrials(params), params)
 
@@ -9,7 +8,6 @@ function [ok] = checkCalibTrials(trials, params)
 
 nPos = params.stim.targetPositions;
 tarPos = [trials.tarPos];
-rounds = [trials.round];
 
 %Count the trials per position
 counts = zeros(1, nPos);
@@ -29,20 +27,17 @@ for posi = 1 : nPos
 end
 fprintf('   %6d   %5d\n', sum(tarPos == 0), length(tarPos));
 
-%Check that every round contains every position exactly once
+%Check that every position appears equally often
 ok = true;
-nRounds = max(rounds);
-for roundi = 1 : nRounds
-    positionsInRound = tarPos(rounds == roundi & tarPos > 0);
-    if ~isequal(sort(positionsInRound), 1 : nPos)
+for posi = 1 : nPos
+    if counts(posi) ~= params.trials.nTrialsPerPosition
         ok = false;
-        disp(['WARNING: round ' num2str(roundi) ' does not contain every position exactly once!']);
+        disp(['WARNING: position ' num2str(posi) ' does not appear ' num2str(params.trials.nTrialsPerPosition) ' times!']);
     end
 end
 
 if ok
-    disp(['OK: every position appears ' num2str(params.trials.nTrialsPerPosition) ...
-        ' times, once in each of the ' num2str(nRounds) ' rounds.']);
+    disp(['OK: every position appears ' num2str(params.trials.nTrialsPerPosition) ' times.']);
     disp(' ');
 end
 end
