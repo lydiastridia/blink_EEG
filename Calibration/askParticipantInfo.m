@@ -4,15 +4,24 @@
 
 function [info] = askParticipantInfo()
 
-%Participant number
+%Participant ID (letters and numbers)
 answerOK = false;
 while ~answerOK
-    info.id = str2double(input('Participant number: ', 's'));
-    if isnan(info.id) || info.id < 1 || info.id ~= round(info.id)
-        disp('  -> Please type a whole number only (e.g., 3).');
+    info.id = strtrim(input('Participant ID: ', 's'));
+    if isempty(info.id) || ~all(isstrprop(info.id, 'alphanum'))
+        disp('  -> Please use letters and numbers only, without spaces (e.g., 3 or P03).');
     else
         answerOK = true;
     end
+end
+
+%Number that belongs to this ID (used for the counterbalancing):
+%the digits in the ID (e.g., P03 -> 3); an ID without digits gets the sum of its character codes
+idDigits = info.id(isstrprop(info.id, 'digit'));
+if isempty(idDigits)
+    info.idNumber = sum(double(info.id));
+else
+    info.idNumber = str2double(idDigits);
 end
 
 %Session number
