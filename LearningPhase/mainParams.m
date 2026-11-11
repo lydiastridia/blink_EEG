@@ -4,7 +4,7 @@ function [params] = mainParams()
 
 % This shows the trial kinds within one miniblock
 % For now, every kind is shown equally often (20% each) but this can easily be changed
-params.design.kinds = {'duplet1', 'duplet2', 'control1', 'control2', 'targetAbsent'}
+params.design.kinds = {'duplet1', 'duplet2', 'control1', 'control2', 'targetAbsent'};
 
 %Target-absent trials -> I followed the manuscript for this, making it a flip-a-coin between
 % which target is missing
