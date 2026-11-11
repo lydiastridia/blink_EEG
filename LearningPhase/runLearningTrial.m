@@ -25,54 +25,54 @@ drawFixation(w, params);
 if trial.T1position > 0
     drawTarget(w, params, positions, trial.T1position);
 end
-T1Onset = Screen('Flip', w, fixOnset + (params.timing.initFix - 0.5) * frameDuration);
+T1Onset = Screen('Flip', w, fixOnset + params.timing.initFix * frameDuration - params.timing.offset);
 
 %ISI
 drawFixation(w, params);
-ISI1Onset = Screen('Flip', w, T1Onset + (params.timing.target - 0.5) * frameDuration);
+ISI1Onset = Screen('Flip', w, T1Onset + params.timing.target * frameDuration - params.timing.offset);
 
 %Mask
 drawFixation(w, params);
 drawMask(w, maskPos, maskColor);
-mask1Onset = Screen('Flip', w, ISI1Onset + (params.timing.ISI - 0.5) * frameDuration);
+mask1Onset = Screen('Flip', w, ISI1Onset + params.timing.ISI * frameDuration - params.timing.offset);
 
 %Fixation between the mask and T2
 drawFixation(w, params);
-blankOnset = Screen('Flip', w, mask1Onset + (params.timing.mask - 0.5) * frameDuration);
+blankOnset = Screen('Flip', w, mask1Onset + params.timing.mask * frameDuration - params.timing.offset);
 
 %T2 (when T2 is missing only the fixation cross is shown)
 drawFixation(w, params);
 if trial.T2position > 0
     drawTarget(w, params, positions, trial.T2position);
 end
-T2Onset = Screen('Flip', w, blankOnset + (params.timing.blank - 0.5) * frameDuration);
+T2Onset = Screen('Flip', w, blankOnset + params.timing.blank * frameDuration - params.timing.offset);
 
 if params.learn.maskT2
     %ISI
     drawFixation(w, params);
-    ISI2Onset = Screen('Flip', w, T2Onset + (params.timing.target - 0.5) * frameDuration);
+    ISI2Onset = Screen('Flip', w, T2Onset + params.timing.target * frameDuration - params.timing.offset);
 
     %Mask
     drawFixation(w, params);
     drawMask(w, maskPos, maskColor);
-    mask2Onset = Screen('Flip', w, ISI2Onset + (params.timing.ISI - 0.5) * frameDuration);
+    mask2Onset = Screen('Flip', w, ISI2Onset + params.timing.ISI * frameDuration - params.timing.offset);
 
     %Delay (fixation cross)
     drawFixation(w, params);
-    delayOnset = Screen('Flip', w, mask2Onset + (params.timing.mask - 0.5) * frameDuration);
+    delayOnset = Screen('Flip', w, mask2Onset + params.timing.mask * frameDuration - params.timing.offset);
     T2Offset = ISI2Onset; %T2 disappears when the ISI starts
     result.mask2Onset = mask2Onset - T1Onset; %should be 1.3
 else
     %No mask: the delay (fixation cross) starts directly after T2
     drawFixation(w, params);
-    delayOnset = Screen('Flip', w, T2Onset + (params.timing.target - 0.5) * frameDuration);
+    delayOnset = Screen('Flip', w, T2Onset + params.timing.target * frameDuration - params.timing.offset);
     T2Offset = delayOnset; %T2 disappears when the delay starts
     result.mask2Onset = 0; %0 = there was no second mask
 end
 
 %End of the delay: the fixation cross stays, and the function returns
 drawFixation(w, params);
-delayEnd = Screen('Flip', w, delayOnset + (params.timing.delay - 0.5) * frameDuration);
+delayEnd = Screen('Flip', w, delayOnset + params.timing.delay * frameDuration - params.timing.offset);
 
 %Save when everything happened on this trial (times in seconds, onsets relative to T1)
 result.maskColor = maskColor;
