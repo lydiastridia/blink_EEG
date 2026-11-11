@@ -24,20 +24,20 @@ drawFixation(w, params);
 if trial.cond == 1
     drawTarget(w, params, positions, trial.tarPos);
 end
-targetOnset = Screen('Flip', w, fixOnset + (params.timing.initFix - 0.5) * frameDuration);
+targetOnset = Screen('Flip', w, fixOnset + params.timing.initFix * frameDuration - params.timing.offset);
 
 %ISI
 drawFixation(w, params);
-ISIOnset = Screen('Flip', w, targetOnset + (params.timing.target - 0.5) * frameDuration);
+ISIOnset = Screen('Flip', w, targetOnset + params.timing.target * frameDuration - params.timing.offset);
 
 %Mask
 drawFixation(w, params);
 drawMask(w, maskPos, maskColor);
-maskOnset = Screen('Flip', w, ISIOnset + (params.timing.ISI - 0.5) * frameDuration);
+maskOnset = Screen('Flip', w, ISIOnset + params.timing.ISI * frameDuration - params.timing.offset);
 
 %Visibility question
 DrawFormattedText(w, params.text.vis, 'center', 'center', params.stim.textColor);
-Screen('Flip', w, maskOnset + (params.timing.mask - 0.5) * frameDuration);
+Screen('Flip', w, maskOnset + params.timing.mask * frameDuration - params.timing.offset);
 [key, rating, RT] = getRating(params);
 
 %ITI (fixation cross)
