@@ -46,6 +46,7 @@ params.stiming.ITI = [0.3333 : 0.0833 : 0.6666]; %5 possible values, one is chos
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Timing expressed in refresh rate (aka: 16.67ms at 60 Hz)
 params.timing.refreshRate = 1 / params.screen.res.hz; %duration of one frame in seconds
+params.timing.offset = 0.002; %to be subtracted from actual presentation times to ensure accurate timing (original code)
 params.timing.initFix = round(params.stiming.initFix / params.timing.refreshRate); %30 frames
 params.timing.target = round(params.stiming.target / params.timing.refreshRate); %1 frame
 params.timing.ISI = round(params.stiming.ISI / params.timing.refreshRate); %1 frame
