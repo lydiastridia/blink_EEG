@@ -341,6 +341,18 @@ else
     disp('WARNING: Only one staircase reached the desired number of total reversals.');
 end
 
+fprintf('\n=== THRESHOLD DEBUG ===\n');
+fprintf('nReversals.a = %d, nReversals.b = %d (need >= %d)\n', nReversals.a, nReversals.b, params.cal.nReversalsUsed);
+fprintf('length(reversalPosition.a) = %d, length(reversalPosition.b) = %d\n', length(reversalPosition.a), length(reversalPosition.b));
+fprintf('reversalPosition.a = %s\n', mat2str(reversalPosition.a));
+fprintf('reversalPosition.b = %s\n', mat2str(reversalPosition.b));
+fprintf('maskC.a = %s\n', mat2str(maskC.a, 3));
+fprintf('maskC.b = %s\n', mat2str(maskC.b, 3));
+fprintf('thresholdValue.a = %s\n', mat2str(thresholdValue.a));
+fprintf('thresholdValue.b = %s\n', mat2str(thresholdValue.b));
+fprintf('thresholdValue.c = %s\n', mat2str(thresholdValue.c));
+fprintf('========================\n\n');
+
 %Mask contrasts for the main task (new)
 contrastUnseen = thresholdValue.c * params.cal.factorUnseen; %non-conscious blocks: threshold + 50%
 if contrastUnseen > 1
