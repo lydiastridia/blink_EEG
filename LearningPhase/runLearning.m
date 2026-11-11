@@ -25,10 +25,10 @@ if ~exist(params.path.learning, 'dir')
     mkdir(params.path.learning);
 end
 
-fileName = sprintf('P%d_S%d', info.id, info.session);
+fileName = sprintf('P%s_S%d', info.id, info.session);
 dataFile = fullfile(params.path.learning, [fileName '_learning.mat']);
 partialFile = fullfile(params.path.learning, [fileName '_learning_partial.mat']);
-positionFile = fullfile(params.path.learning, sprintf('P%d_positions.mat', info.id));
+positionFile = fullfile(params.path.learning, sprintf('P%s_positions.mat', info.id));
 
 if exist(dataFile, 'file')
     disp('WARNING: Subject file already exists!');
@@ -57,12 +57,12 @@ if exist(positionFile, 'file')
     disp('Positions of this participant loaded.');
 else
     disp('Choosing the positions of this participant (this can take a moment) ...');
-    pos = makePositions(params, info.id);
+    pos = makePositions(params, info.idNumber);
     save(positionFile, 'pos');
 end
 
 %Prepare the trials (and check them)
-trials = makeLearningTrials(params, info.id);
+trials = makeLearningTrials(params, info.idNumber);
 trials = addTargets(trials, params);
 checkLearningTrials(trials, params);
 trials = addPositions(trials, pos);
