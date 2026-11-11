@@ -10,7 +10,7 @@ Open MATLAB in this folder and type `runCalibration`. Settings (number of trials
 |---|---|---|
 | `runCalibration.m` | Main script: participant info, instructions, practice, trial loop with the staircases, threshold, saving | `nonconSeq_runCal.m` |
 | `calibParams.m` | All settings and texts; also picks the screen, checks the refresh rate and converts durations to frames | `nonconSeq_initParams_cal.m` |
-| `makeCalibTrials.m` | Trial list in rounds: each round shows every position once, plus some target-absent trials | `nonconSeq_prepTrials_cal.m` |
+| `makeCalibTrials.m` | Trial list: every position 5 times plus the target-absent trials, all shuffled together | `nonconSeq_prepTrials_cal.m` |
 | `checkCalibTrials.m` | Prints how often each position appears and checks every round | (new) |
 | `findPositions.m` | Screen positions of the 16 targets | `findPositions.m` |
 | `prepMask.m` | Screen positions of the mask rectangles | `nonconSeq_prepMask.m` |
