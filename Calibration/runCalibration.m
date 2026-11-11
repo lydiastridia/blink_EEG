@@ -29,7 +29,7 @@ if ~exist(params.path.data, 'dir')
     mkdir(params.path.data);
 end
 
-fileName = sprintf('P%d_S%d', info.id, info.session);
+fileName = sprintf('P%s_S%d', info.id, info.session);
 dataFile = fullfile(params.path.data, [fileName '_calibration.mat']);
 partialFile = fullfile(params.path.data, [fileName '_calibration_partial.mat']);
 
