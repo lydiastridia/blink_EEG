@@ -20,7 +20,7 @@
 function [pos] = makePositions(params, subjectNum)
 
 nPositions = params.pos.nPositions;
-visNames = {'seen','unseen'}
+visNames = {'seen','unseen'};
 
 %Rule 3: which jump sizes belong to seen and which to unseen?
 %jumps adjusted in pairs of participants
@@ -34,13 +34,13 @@ else
     jumps.unseen = params.pos.jumpsA;
 end
 
-finished = fasle;
+finished = false;
 while ~finished
 
     allRulesOK = true;
 
     for visi = 1 : 2
-        visName = visName{visi};
+        visName = visNames{visi};
 
         %Rule 3: 2 jump sizes of this set in random order
         theseJumps = jumps.(visName);
@@ -48,13 +48,13 @@ while ~finished
 
         %Rule 4: one duplet jumps clockwise and the other one counter-clockwise
         if rand < 0.5
-            direction = [1 -1]
+            direction = [1 -1];
         else
-            direction = [-1 1]
+            direction = [-1 1];
         end
 
 %Draw the two duplet T1 positions; T2 = T1 + jump
-        %(mod keeps the result between 1 and 16, e.g. 15 + 3 = position 2)
+%(mod keeps the result between 1 and 16, e.g. 15 + 3 = position 2)
         dupletT1 = randi(nPositions, 1, 2);
         T2 = dupletT1 + direction .* theseJumps;
         T2 = mod(T2 - 1, nPositions) + 1;
