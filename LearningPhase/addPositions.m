@@ -1,4 +1,14 @@
 % This function allocates the positions on the circle to every trial
+% It adds these fields to the trial list:
+%   T1position          position (1 to 16) where T1 is shown, 0 = no T1
+%   T2position          position (1 to 16) where T2 is shown, 0 = no T2
+%   predictedT2position position where T2 is expected after this T1
+%                       (only for a duplet T1, also when T2 is missing), 0 = no prediction
+%
+% The positions come from makePositions: pos.seen is used in seen miniblocks,
+% pos.unseen in unseen miniblocks.
+%
+% Usage: trials = addPositions(trials, pos)
 
 function [trials] = addPositions(trials, pos)
 
