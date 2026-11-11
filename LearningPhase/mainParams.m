@@ -19,4 +19,13 @@ params.design.propT1absent = 0.5;
 
 params.learn.nMiniblocksPerVis = 2; 
 
+%% Positions
+params.pos.nPositions = 16; %positions on the circle (22.5 degrees apart)
+%Jump sizes from T1 to T2 for the two duplets of a set, in positions
+%(1 position = 22.5 degrees): [3 6] = 67.5 and 135 degrees, [2 7] = 45 and 157.5 degrees
+params.pos.jumpsA = [3 6];
+params.pos.jumpsB = [2 7];
+%Rule 5 (to be decided): T2 locations left and right, both duplet T1s on the same side
+params.pos.leftRightRule = true;
+
 end
