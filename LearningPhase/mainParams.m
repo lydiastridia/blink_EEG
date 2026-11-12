@@ -95,4 +95,12 @@ params.text.learnEnd = ['Thank you! This part is finished.\n\n' ...
 repoRoot = fileparts(thisFolder);
 params.path.learning = fullfile(repoRoot, 'Data', 'LearningPhase');
 
+%% Test phase: like the learning phase, plus deviant trials
+% deviant = T1 of a duplet, but T2 at the location of the other duplet
+params.test.kinds = {'duplet1', 'duplet1', 'duplet2', 'duplet2', 'control1', 'control2', 'deviant', 'targetAbsent'};
+params.test.nMiniblocksPerVis = 1; %miniblocks per visibility in the test phase (8 x 8 + 1 = 65 trials each)
+params.text.testInst = ['The task continues in the same way as before.\n\n' ...
+    'Press SPACE to continue.'];
+params.path.test = fullfile(repoRoot, 'Data', 'TestPhase');
+
 end
