@@ -60,6 +60,21 @@ for visi = 1 : 2
         end
     end
 
+    %% DEVIANTS (test phase only): T1 of a duplet, but T2 at the location of the OTHER duplet
+    index = find(strcmp({trials.visibility}, visNames{visi}) & strcmp({trials.kindName}, 'deviant'));
+    index = index(randperm(length(index))); %random order, so that it is random which duplet is used on which trial
+
+    sources = repmat([1 2], 1, ceil(length(index) / 2)); %1 2 1 2 ... (half from duplet1, half from duplet2)
+    sources = sources(1 : length(index));
+
+    for i = 1 : length(index)
+        trials(index(i)).T1source = ['duplet' num2str(sources(i))]; %'duplet1' or 'duplet2'
+        trials(index(i)).T1present = 1;
+        trials(index(i)).T2present = 1;
+        trials(index(i)).T2location = 3 - sources(i); %the other location: duplet1 -> location 2, duplet2 -> location 1
+        trials(index(i)).trialType = 'deviant';
+    end
+
     %% TARGET-ABSENT: either T1 or T2 is missing
     index = find(strcmp({trials.visibility}, visNames{visi}) & strcmp({trials.kindName}, 'targetAbsent'));
     index = index(randperm(length(index))); %random order, so that it is random which trials miss T1
