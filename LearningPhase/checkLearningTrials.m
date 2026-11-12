@@ -9,7 +9,7 @@ function [ok] = checkLearningTrials(trials, params)
 
 kinds = params.design.kinds;
 nKinds = length(kinds);
-typeNames = {'valid', 'control', 'T1absent', 'omission', 'controlOmission'};
+typeNames = {'valid', 'control', 'deviant', 'T1absent', 'omission', 'controlOmission'};
 nMiniblocks = max([trials.Miniblock_no]);
 ok = true;
 
