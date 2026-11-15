@@ -67,15 +67,17 @@ def get_params():
     P['practiceContrasts'] = [0.03, 0.03, 0.03, 0.1, 0.1, 0.1]
 
     # ---------------- Learning phase ----------------
-    P['kinds'] = ['duplet1', 'duplet1', 'duplet2', 'duplet2', 'control1', 'control2', 'targetAbsent']
-    P['propT1absent'] = 0.5            # share of the target-absent trials in which T1 is missing
-    P['nMiniblocksPerVis'] = 2         # miniblocks per visibility (7 x 7 + 1 = 50 trials each)
-    P['maskT2'] = False                # False: T2 without a mask; True: T2 masked like T1 (manuscript)
+    # 4 duplets and 1 omission kind -> 5 x 5 + 1 = 26 trials per miniblock: 80% duplets, 20% omissions
+    P['nDuplets'] = 4
+    P['kinds'] = ['duplet1', 'duplet2', 'duplet3', 'duplet4', 'omission']
+    P['nMiniblocksPerVis'] = 2         # miniblocks per visibility (2 -> 4 miniblocks, 104 trials)
+    P['maskT2'] = True                 # T2 is followed by the same mask as T1
 
-    # Positions
-    P['jumpsA'] = [3, 6]               # in positions (1 position = 22.5 degrees): 67.5 and 135 degrees
-    P['jumpsB'] = [2, 7]               # 45 and 157.5 degrees
-    P['leftRightRule'] = True          # T2 locations left and right, both duplet T1s on the same side
+    # Duplets: the tasks pick one row of duplet_list.csv at random for every new participant.
+    # After changing one of these two rules, run make_duplet_list.py to make the list again.
+    P['sideRule'] = 'crossed'          # 'crossed'    : one duplet each right->right, left->left, right->left, left->right
+                                       # 'rightToLeft': every T1 on the right, every T2 on the left (original sequence file)
+    P['t2AwayFromMidline'] = True      # no T2 at positions 1, 8, 9, 16 (next to the vertical midline); only with 'crossed'
 
     # Mask contrast correction during the task
     P['nWrongAllowed'] = 2
@@ -86,9 +88,8 @@ def get_params():
     P['letters'] = 'aefgiklmorsuwxyz'  # 16 letters, shuffled on every trial
 
     # ---------------- Test phase ----------------
-    P['testKinds'] = ['duplet1', 'duplet1', 'duplet2', 'duplet2', 'control1', 'control2',
-                      'deviant', 'targetAbsent']
-    P['testMiniblocksPerVis'] = 1      # 8 x 8 + 1 = 65 trials each
+    P['testKinds'] = ['duplet1', 'duplet2', 'duplet3', 'duplet4', 'deviant', 'omission']
+    P['testMiniblocksPerVis'] = 1      # 6 x 6 + 1 = 37 trials each (provisional, to be decided)
 
     # ---------------- Texts ----------------
     P['text'] = {
