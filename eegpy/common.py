@@ -270,11 +270,13 @@ def run_main_task(P, phase):
         if not os.path.isdir(P['path']['learning']):
             os.makedirs(P['path']['learning'])
         # positions: made once per participant and saved, afterwards always loaded
+        pos = None
         if os.path.isfile(positionFile):
             with open(positionFile) as f:
                 pos = json.load(f)
             print('Positions of this participant loaded.')
-        else:
+        if pos is None or 'T1' not in pos.get('seen', {}):
+            # no file yet (or a file from the old design with two duplets): make new positions
             pos = T.make_positions(P, info['idNumber'])
             with open(positionFile, 'w') as f:
                 json.dump(pos, f, indent=1)
