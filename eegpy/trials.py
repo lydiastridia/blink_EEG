@@ -1,9 +1,10 @@
 """Trial lists and positions (no screen needed).
 
-A translation of makeTrialOrder.m, makeLearningTrials.m, addTargets.m,
-makePositions.m, addPositions.m and checkLearningTrials.m.
+The duplets follow the rules of the original sequence generator: four duplets per visibility.
 """
+import itertools
 import math
+import os
 import random
 
 
@@ -78,128 +79,186 @@ def make_trials(kinds, nPerVis, subjectNum):
 
 # ---------------------------------------------------------------- targets
 def _balanced(values, n):
-    """n values taken in turn from 'values' (1 2 1 2 ...), in random order."""
+    """n values taken in turn from 'values' (1 2 3 4 1 2 ...), in random order."""
     out = (list(values) * int(math.ceil(n / float(len(values)))))[:n]
     random.shuffle(out)
     return out
 
 
 def add_targets(trials, P):
-    """Decides for every trial which targets are shown (T1source, T2location, trialType)."""
-    t1Sources = ['duplet1', 'duplet2', 'control1', 'control2']
+    """Decides for every trial which targets are shown.
+    It adds: T1duplet   (1-4) the duplet whose T1 is shown
+             T2location (1-4) the duplet whose T2 position is used, 0 = T2 is missing
+             trialType  'valid', 'omission' or 'deviant'
+    T1 is shown on every trial."""
+    nDuplets = P['nDuplets']
     for vis in ['seen', 'unseen']:
         def index_of(kindName):
             return [i for i, t in enumerate(trials) if t['visibility'] == vis and t['kindName'] == kindName]
 
-        # duplets: T2 always at the location of its duplet
-        for d in (1, 2):
+        # duplets: T1 of the duplet, T2 at the position of the same duplet
+        for d in range(1, nDuplets + 1):
             for i in index_of('duplet%d' % d):
-                trials[i].update(T1source='duplet%d' % d, T1present=1, T2present=1, T2location=d,
-                                 trialType='valid')
+                trials[i].update(T1duplet=d, T2location=d, trialType='valid')
 
-        # controls: T2 at location 1 or 2 (half each)
-        for c in (1, 2):
-            index = index_of('control%d' % c)
-            locations = _balanced([1, 2], len(index))
-            for i, loc in zip(index, locations):
-                trials[i].update(T1source='control%d' % c, T1present=1, T2present=1, T2location=loc,
-                                 trialType='control')
+        # omissions: T1 of one of the duplets (each duplet equally often), T2 is missing
+        index = index_of('omission')
+        sources = _balanced(range(1, nDuplets + 1), len(index))
+        for i, d in zip(index, sources):
+            trials[i].update(T1duplet=d, T2location=0, trialType='omission')
 
-        # deviants (test phase only): T1 of a duplet, T2 at the location of the OTHER duplet
+        # deviants (test phase only): T1 of one duplet, T2 at the position of ANOTHER duplet
         index = index_of('deviant')
-        random.shuffle(index)
-        sources = ([1, 2] * int(math.ceil(len(index) / 2.0)))[:len(index)]
-        for i, s in zip(index, sources):
-            trials[i].update(T1source='duplet%d' % s, T1present=1, T2present=1, T2location=3 - s,
-                             trialType='deviant')
-
-        # target-absent: either T1 or T2 is missing
-        index = index_of('targetAbsent')
-        random.shuffle(index)
-        nT1absent = int(math.floor(P['propT1absent'] * len(index) + 0.5))
-        indexT1absent = index[:nT1absent]
-        indexT2absent = index[nT1absent:]
-
-        locations = _balanced([1, 2], len(indexT1absent))
-        for i, loc in zip(indexT1absent, locations):
-            trials[i].update(T1source='none', T1present=0, T2present=1, T2location=loc,
-                             trialType='T1absent')
-
-        sources = _balanced([1, 2, 3, 4], len(indexT2absent))
-        for i, s in zip(indexT2absent, sources):
-            trials[i].update(T1source=t1Sources[s - 1], T1present=1, T2present=0, T2location=0,
-                             trialType='omission' if s <= 2 else 'controlOmission')
+        sources = _balanced(range(1, nDuplets + 1), len(index))
+        for i, d in zip(index, sources):
+            others = [k for k in range(1, nDuplets + 1) if k != d]
+            trials[i].update(T1duplet=d, T2location=random.choice(others), trialType='deviant')
     return trials
 
 
 # ---------------------------------------------------------------- positions
-def make_positions(P, subjectNum):
-    """Positions of one participant: for seen and for unseen miniblocks 2 duplet T1s,
-    2 control T1s and 2 T2 locations. Random, but they follow the rules:
-      1 no position is used twice
-      2 each set covers all four quadrants
-      3 fixed jump sizes (jumpsA / jumpsB), swapped between seen and unseen every 2 participants
-      4 one clockwise and one counter-clockwise duplet per set
-      5 (if leftRightRule) T2s left and right, both duplet T1s on the same side
-    Positions are numbered 1-16 clockwise, starting at the top (1-8 right, 9-16 left)."""
+def jump(t1, t2, n=16):
+    """Jump from T1 to T2 in positions, the shorter way round (as in the original generator):
+    + = clockwise, - = counter-clockwise; half a circle (180 degrees) counts as -8."""
+    return (t2 - t1 + n // 2) % n - n // 2
+
+
+def check_set(duplets, P):
+    """Checks the rules for one set of four duplets. duplets = [(T1, T2), (T1, T2), ...]"""
     n = P['nPositions']
-    pairNumber = int(math.ceil(subjectNum / 2.0))
-    if pairNumber % 2 == 1:
-        jumps = {'seen': P['jumpsA'], 'unseen': P['jumpsB']}
+    jumps = [jump(t1, t2, n) for (t1, t2) in duplets]
+
+    # two clockwise and two counter-clockwise duplets
+    if sum(1 for j in jumps if j < 0) != 2:
+        return False
+    # four different jump sizes
+    if len(set(abs(j) for j in jumps)) != 4:
+        return False
+    # clockwise and counter-clockwise jumps add up to zero
+    if sum(jumps) != 0:
+        return False
+    # all four quadrants (1-4, 5-8, 9-12, 13-16) are used
+    positions = [p for d in duplets for p in d]
+    if len(set((p - 1) // (n // 4) for p in positions)) < 4:
+        return False
+
+    # sides: positions 1-8 are on the right, 9-16 on the left
+    sides = [('R' if t1 <= n // 2 else 'L', 'R' if t2 <= n // 2 else 'L') for (t1, t2) in duplets]
+    if P['sideRule'] == 'crossed':
+        # one duplet of each kind: right->right, left->left, right->left, left->right
+        if len(set(sides)) != 4:
+            return False
+    elif P['sideRule'] == 'rightToLeft':
+        # every T1 on the right, every T2 on the left (as in the original sequence file)
+        if any(s != ('R', 'L') for s in sides):
+            return False
     else:
-        jumps = {'seen': P['jumpsB'], 'unseen': P['jumpsA']}
+        raise ValueError("P['sideRule'] must be 'crossed' or 'rightToLeft'")
 
-    while True:
-        allRulesOK = True
-        pos = {}
-        for vis in ['seen', 'unseen']:
-            theseJumps = list(jumps[vis])
-            random.shuffle(theseJumps)
-            direction = random.choice([[1, -1], [-1, 1]])
-            dupletT1 = [random.randint(1, n), random.randint(1, n)]
-            T2 = [(dupletT1[k] + direction[k] * theseJumps[k] - 1) % n + 1 for k in range(2)]
-            controlT1 = [random.randint(1, n), random.randint(1, n)]
-            thisSet = dupletT1 + controlT1 + T2
+    # no T2 directly next to the vertical midline (not possible with 'rightToLeft')
+    if P['t2AwayFromMidline'] and P['sideRule'] != 'rightToLeft':
+        midline = [1, n // 2, n // 2 + 1, n]
+        if any(t2 in midline for (t1, t2) in duplets):
+            return False
+    return True
 
-            quadrants = set(int(math.ceil(p / (n / 4.0))) for p in thisSet)
-            if len(quadrants) < 4:
-                allRulesOK = False
 
-            if P['leftRightRule']:
-                isLeft = [p > n / 2 for p in thisSet]
-                if isLeft[4] == isLeft[5]:      # both T2 locations on the same side
-                    allRulesOK = False
-                if isLeft[0] != isLeft[1]:      # duplet T1s on different sides
-                    allRulesOK = False
+def valid_sets(eight, P):
+    """All ways to make four duplets out of eight positions that pass check_set."""
+    found = []
+    for t1s in itertools.combinations(eight, 4):            # which four positions are T1 ...
+        rest = [p for p in eight if p not in t1s]
+        for t2s in itertools.permutations(rest):             # ... and which T2 goes with which T1
+            duplets = list(zip(t1s, t2s))
+            if check_set(duplets, P):
+                found.append(duplets)
+    return found
 
-            pos[vis] = {'dupletT1': dupletT1, 'controlT1': controlT1, 'T2': T2,
-                        'jumps': [direction[k] * theseJumps[k] for k in range(2)], 'all': thisSet}
 
-        allTwelve = pos['seen']['all'] + pos['unseen']['all']
-        if len(set(allTwelve)) < len(allTwelve):
-            allRulesOK = False
-        if allRulesOK:
-            pos['subjectNum'] = subjectNum
-            return pos
+def build_duplet_list(P):
+    """All combinations of duplets that pass the rules (as the original generator does).
+    Each combination is a list of 16 numbers: T1, T2 of the four seen duplets, then T1, T2 of
+    the four unseen duplets. Together a combination uses each of the 16 positions once.
+    This takes a few seconds; the result is saved by write_duplet_list."""
+    n = P['nPositions']
+    everything = set(range(1, n + 1))
+    setsOf = {}                                   # eight positions -> all valid sets of four duplets
+    for eight in itertools.combinations(range(1, n + 1), n // 2):
+        if sum(1 for p in eight if p <= n // 2) != n // 4:
+            continue                              # both side rules need 4 right and 4 left positions
+        found = valid_sets(list(eight), P)
+        if found:
+            setsOf[frozenset(eight)] = found
+
+    rows = []
+    for eight in sorted(setsOf, key=sorted):
+        others = frozenset(everything - eight)    # the unseen set gets the other eight positions
+        if others in setsOf:
+            for seenSet in setsOf[eight]:
+                for unseenSet in setsOf[others]:
+                    rows.append([p for d in seenSet for p in d] + [p for d in unseenSet for p in d])
+    return rows
+
+
+def duplet_list_file():
+    return os.path.join(os.path.dirname(os.path.abspath(__file__)), 'duplet_list.csv')
+
+
+def rules_label(P):
+    """One line that says with which rules a list was made (first line of the file)."""
+    return '# sideRule=%s t2AwayFromMidline=%s' % (P['sideRule'], P['t2AwayFromMidline'])
+
+
+def write_duplet_list(P):
+    """Builds the list and saves it as duplet_list.csv next to this file."""
+    rows = build_duplet_list(P)
+    with open(duplet_list_file(), 'w') as f:
+        f.write(rules_label(P) + '\n')
+        f.write('seenT1_1,seenT2_1,seenT1_2,seenT2_2,seenT1_3,seenT2_3,seenT1_4,seenT2_4,'
+                'unseenT1_1,unseenT2_1,unseenT1_2,unseenT2_2,unseenT1_3,unseenT2_3,unseenT1_4,unseenT2_4\n')
+        for row in rows:
+            f.write(','.join(str(p) for p in row) + '\n')
+    return len(rows)
+
+
+def read_duplet_list(P):
+    """Reads duplet_list.csv. If the file is missing, or was made with other rules than those
+    in params.py, it is made again first."""
+    fileName = duplet_list_file()
+    upToDate = False
+    if os.path.isfile(fileName):
+        with open(fileName) as f:
+            upToDate = (f.readline().strip() == rules_label(P))
+    if not upToDate:
+        print('Making the list of duplet combinations for the current rules (takes a few seconds) ...')
+        nRows = write_duplet_list(P)
+        print('duplet_list.csv now has %d combinations.' % nRows)
+    with open(fileName) as f:
+        lines = f.read().splitlines()[2:]         # skip the rules line and the column names
+    return [[int(p) for p in line.split(',')] for line in lines]
+
+
+def make_positions(P, subjectNum):
+    """The duplets of one participant: one combination picked at random from duplet_list.csv
+    (every combination has the same chance), as in the original code."""
+    row = random.choice(read_duplet_list(P))
+    pos = {'subjectNum': subjectNum}
+    for vis, numbers in (('seen', row[:8]), ('unseen', row[8:])):
+        duplets = [(numbers[i], numbers[i + 1]) for i in range(0, 8, 2)]
+        random.shuffle(duplets)                   # which one is called duplet 1, 2, 3, 4
+        pos[vis] = {'T1': [d[0] for d in duplets], 'T2': [d[1] for d in duplets],
+                    'jumps': [jump(d[0], d[1], P['nPositions']) for d in duplets]}
+    return pos
 
 
 def add_positions(trials, pos):
-    """Gives every trial its positions (0 = this target is not shown)."""
+    """Gives every trial its positions:
+    T1position, T2position (0 = T2 is missing) and predictedT2position (where T2 belongs after this T1)."""
     for t in trials:
         thisSet = pos[t['visibility']]
-        source = t['T1source']
-        if source in ('duplet1', 'duplet2'):
-            k = int(source[-1]) - 1
-            t['T1position'] = thisSet['dupletT1'][k]
-            t['predictedT2position'] = thisSet['T2'][k]
-        elif source in ('control1', 'control2'):
-            k = int(source[-1]) - 1
-            t['T1position'] = thisSet['controlT1'][k]
-            t['predictedT2position'] = 0
-        else:
-            t['T1position'] = 0
-            t['predictedT2position'] = 0
-        if t['T2present'] == 1:
+        t['T1position'] = thisSet['T1'][t['T1duplet'] - 1]
+        t['predictedT2position'] = thisSet['T2'][t['T1duplet'] - 1]
+        if t['T2location'] > 0:
             t['T2position'] = thisSet['T2'][t['T2location'] - 1]
         else:
             t['T2position'] = 0
@@ -210,7 +269,7 @@ def add_positions(trials, pos):
 def check_trials(trials, kinds):
     """Prints an overview of the trial list and checks the transitions."""
     nKinds = len(kinds)
-    typeNames = ['valid', 'control', 'deviant', 'T1absent', 'omission', 'controlOmission']
+    typeNames = ['valid', 'omission', 'deviant']
     nMiniblocks = max(t['Miniblock_no'] for t in trials)
     ok = True
     print('')
