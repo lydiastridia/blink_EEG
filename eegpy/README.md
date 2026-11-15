@@ -8,7 +8,9 @@ The same three tasks as the MATLAB version, written for PsychoPy (free, no licen
 | `run_learning.py` | Learning phase |
 | `run_test.py` | Test phase (learning phase plus deviant trials) |
 | `params.py` | All settings |
-| `trials.py` | Trial lists and positions |
+| `trials.py` | Trial lists, the rules for the duplets, positions |
+| `make_duplet_list.py` | Makes `duplet_list.csv`; run it after changing a rule for the duplets |
+| `duplet_list.csv` | All combinations of duplets that pass the rules; one row is picked at random per participant |
 | `common.py` | Window, stimuli, key presses, the trial, the questions, saving |
 
 ## How to run
@@ -29,6 +31,7 @@ In `params.py`:
   It keeps the stimuli the same size as in the MATLAB version.
 - `P['nMiniblocksPerVis']`, `P['testMiniblocksPerVis']`, `P['kinds']`, `P['testKinds']`: number of trials.
 - `P['maskT2']`: whether T2 is followed by a mask.
+- `P['sideRule']`, `P['t2AwayFromMidline']`: rules for the duplets (then run `make_duplet_list.py`).
 
 ## Data
 
