@@ -1,4 +1,4 @@
-"""All settings of the PsychoPy version (calibration, learning phase, test phase).
+"""Purpose: all settings of the three tasks (calibration, learning phase, test phase).
 
 The values are the same as in calibParams.m and mainParams.m of the MATLAB version.
 Sizes are given in pixels as Psychtoolbox saw the screen (see SCREEN_HEIGHT_PIX).
@@ -146,5 +146,6 @@ def get_params():
         'calibration': os.path.join(repoRoot, 'Data', 'Calibration'),
         'learning': os.path.join(repoRoot, 'Data', 'LearningPhase'),
         'test': os.path.join(repoRoot, 'Data', 'TestPhase'),
+        'dupletList': os.path.join(thisFolder, 'duplet_list.csv'),
     }
     return P
