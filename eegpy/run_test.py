@@ -1,6 +1,7 @@
 """Purpose: main script of the test phase (PsychoPy version of runTest.m). Run this file to start.
-The test phase uses the same duplets as the learning phase, with valid trials, omissions and deviants
-in the numbers of P['testTrialsPerKind'], and continues with the mask contrasts at the end of the learning phase.
+The test phase uses the same duplets as the learning phase, with valid trials, omissions, deviants
+and random deviants in the numbers of P['testTrialsPerKind'], and continues with the mask contrasts
+at the end of the learning phase.
 The learning phase must have been run before with the same participant ID and session.
 
 Output in Data/TestPhase:
