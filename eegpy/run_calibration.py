@@ -14,6 +14,10 @@ import random
 
 from psychopy import core
 
+from add_paths import add_paths
+
+add_paths()   # makes the functions in the subfolders available
+
 from abort_experiment import AbortExperiment
 from ask_participant_info import ask_participant_info
 from close_screen import close_screen
