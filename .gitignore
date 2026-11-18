@@ -5,3 +5,7 @@ Data/
 *.asv
 *.m~
 .DS_Store
+
+# Python environment and cache
+.venv/
+__pycache__/
