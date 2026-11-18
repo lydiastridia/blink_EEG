@@ -1,0 +1,12 @@
+{
+    "python.analysis.extraPaths": [
+        "calibration",
+        "duplets",
+        "general",
+        "learning_phase",
+        "responses",
+        "screen",
+        "test_phase",
+        "trial"
+    ]
+}
