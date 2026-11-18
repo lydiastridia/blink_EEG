@@ -10,7 +10,7 @@ One function per file; the file has the same name as the function.
 | --- | --- |
 | `run_calibration.py` | Calibration (two staircases, threshold, convergence graph) |
 | `run_learning.py` | Learning phase |
-| `run_test.py` | Test phase (valid trials, omissions and deviants in adjustable numbers) |
+| `run_test.py` | Test phase (valid trials, omissions, deviants and random deviants in adjustable numbers) |
 | `make_duplet_list.py` | Makes `duplet_list.csv`; run it after changing a rule for the duplets |
 
 **Settings and data files**
@@ -49,8 +49,10 @@ One function per file; the file has the same name as the function.
 | `check_learning_trials.py` | Prints the overview of the trial list |
 | `make_test_trials.py` | Trial list of the test phase (numbers from `P['testTrialsPerKind']`) |
 | `longest_run.py` | Longest run of omissions/deviants in a row |
+| `deviant_keep_clear.py` | Which predictive T2s a deviant T2 must keep clear of |
 | `allowed_deviant_positions.py` | Where a deviant T2 may appear |
-| `add_deviant_positions.py` | Picks the T2 position of every deviant trial |
+| `allowed_random_T1_positions.py` | Where the T1 of a random deviant may appear |
+| `add_deviant_positions.py` | Picks the positions of the deviants and random deviants |
 | `check_test_trials.py` | Prints the overview of the test trial list |
 | `run_learning_trial.py` | One learning or test trial on the screen |
 | `run_questions.py` | The four questions and the ITI |
