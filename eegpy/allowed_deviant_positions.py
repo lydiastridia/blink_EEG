@@ -1,30 +1,19 @@
-"""Purpose: the positions where T2 may appear on a deviant trial. Never allowed: the predicted T2
-of this trial's duplet, the positions next to it, and the position where T1 was shown on this trial.
-P['deviantAwayFrom'] decides whether the other three T2s of the set are kept clear as well:
-    'predictedT2' : only the predicted T2 of this trial's duplet (and its neighbours) is excluded
-    'allT2'       : all four predictive T2s of the set (and their neighbours) are excluded
+"""Purpose: the positions where T2 may appear on a deviant or random deviant trial:
+not where T1 was shown on this trial, not on one of the positions to keep clear,
+and not next to one of them.
 
-Input:  thisSet      duplets of this visibility (pos['seen'] or pos['unseen'], from make_positions)
-        duplet       the duplet whose T1 is shown (1-4)
+Input:  T1position   where T1 is shown on this trial
+        keepClear    the predictive T2 positions to keep clear (deviant_keep_clear)
         P            settings (params.py)
 Output: allowed      list of allowed positions
 """
 
 
-def allowed_deviant_positions(thisSet, duplet, P):
+def allowed_deviant_positions(T1position, keepClear, P):
     nPositions = P['nPositions']
-    T1 = thisSet['T1'][duplet - 1]
-    predictedT2 = thisSet['T2'][duplet - 1]
-
-    # which T2 positions have to be kept clear
-    if P['deviantAwayFrom'] == 'allT2':
-        keepClear = thisSet['T2']
-    else:
-        keepClear = [predictedT2]
-
     allowed = []
     for p in range(1, nPositions + 1):
-        if p == T1:              # where T1 was shown on this trial
+        if p == T1position:      # where T1 was shown on this trial
             continue
         if p in keepClear:       # a predictive T2
             continue
