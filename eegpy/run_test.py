@@ -14,6 +14,10 @@ import os
 
 from psychopy import core
 
+from add_paths import add_paths
+
+add_paths()   # makes the functions in the subfolders available
+
 from abort_experiment import AbortExperiment
 from add_deviant_positions import add_deviant_positions
 from add_positions import add_positions
