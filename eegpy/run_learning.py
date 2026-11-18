@@ -57,13 +57,12 @@ def main():
     contrast = {'seen': threshold['contrastSeen'], 'unseen': threshold['contrastUnseen']}
 
     # positions: made once per participant and saved, afterwards always loaded
-    pos = None
     if os.path.isfile(positionFile):
         with open(positionFile) as f:
             pos = json.load(f)
         print('Positions of this participant loaded.')
-    if pos is None or 'T1' not in pos.get('seen', {}):
-        # no file yet (or a file from the old design with two duplets): make new positions
+    else:
+        # no file yet: make new positions
         pos = make_positions(P, info['idNumber'])
         with open(positionFile, 'w') as f:
             json.dump(pos, f, indent=1)
