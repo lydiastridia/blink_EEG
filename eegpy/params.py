@@ -74,10 +74,11 @@ def get_params():
     P['maskT2'] = True                 # T2 is followed by the same mask as T1
 
     # Duplets: the tasks pick one row of duplet_list.csv at random for every new participant.
-    # After changing one of these two rules, run make_duplet_list.py to make the list again.
+    # After changing one of these rules, run make_duplet_list.py to make the list again.
     P['sideRule'] = 'crossed'          # 'crossed'    : one duplet each right->right, left->left, right->left, left->right
                                        # 'rightToLeft': every T1 on the right, every T2 on the left (original sequence file)
     P['t2AwayFromMidline'] = True      # no T2 at positions 1, 8, 9, 16 (next to the vertical midline); only with 'crossed'
+    P['t2NotNeighbours'] = True        # no two T2 positions of a set are next to each other
 
     # Mask contrast correction during the task
     P['nWrongAllowed'] = 2
@@ -88,8 +89,18 @@ def get_params():
     P['letters'] = 'aefgiklmorsuwxyz'  # 16 letters, shuffled on every trial
 
     # ---------------- Test phase ----------------
-    P['testKinds'] = ['duplet1', 'duplet2', 'duplet3', 'duplet4', 'deviant', 'omission']
-    P['testMiniblocksPerVis'] = 1      # 6 x 6 + 1 = 37 trials each (provisional, to be decided)
+    # Number of trials of each kind in ONE test miniblock (together 52 -> 52 trials per miniblock).
+    # The trials of each kind are divided equally over the 4 duplets (so use multiples of 4).
+    #   valid    : T1 of a duplet, T2 at the predicted position (as in the learning phase)
+    #   omission : T1 of a duplet, no T2 (as in the learning phase)
+    #   deviant  : T1 of a duplet, T2 at a random allowed position (see P['deviantAwayFrom'])
+    # The order of the trials within a miniblock is random.
+    P['testTrialsPerKind'] = {'valid': 20, 'omission': 16, 'deviant': 16}
+    P['testMiniblocks'] = 2                # test miniblocks in total; they alternate seen / unseen
+    # Where a deviant T2 may NOT appear (always also not where T1 was shown on that trial):
+    #   'predictedT2' : on or next to the predicted T2 of that trial's duplet
+    #   'allT2'       : on or next to any of the four predictive T2s of the set
+    P['deviantAwayFrom'] = 'allT2'
 
     # ---------------- Texts ----------------
     P['text'] = {
