@@ -10,7 +10,7 @@ One function per file; the file has the same name as the function.
 | --- | --- |
 | `run_calibration.py` | Calibration (two staircases, threshold, convergence graph) |
 | `run_learning.py` | Learning phase |
-| `run_test.py` | Test phase (learning phase plus deviant trials) |
+| `run_test.py` | Test phase (valid trials, omissions and deviants in adjustable numbers) |
 | `make_duplet_list.py` | Makes `duplet_list.csv`; run it after changing a rule for the duplets |
 
 **Settings and data files**
@@ -28,7 +28,7 @@ One function per file; the file has the same name as the function.
 | `run_calib_trial.py` | One calibration trial |
 | `plot_convergence.py` | Convergence graph |
 
-**Learning and test phase: trial list and duplets**
+**Learning and test phase: trial lists and duplets**
 
 | File | What it does |
 | --- | --- |
@@ -47,6 +47,11 @@ One function per file; the file has the same name as the function.
 | `make_positions.py` | Picks the duplets of one participant |
 | `add_positions.py` | Gives every trial its positions |
 | `check_learning_trials.py` | Prints the overview of the trial list |
+| `make_test_trials.py` | Trial list of the test phase (numbers from `P['testTrialsPerKind']`) |
+| `longest_run.py` | Longest run of omissions/deviants in a row |
+| `allowed_deviant_positions.py` | Where a deviant T2 may appear |
+| `add_deviant_positions.py` | Picks the T2 position of every deviant trial |
+| `check_test_trials.py` | Prints the overview of the test trial list |
 | `run_learning_trial.py` | One learning or test trial on the screen |
 | `run_questions.py` | The four questions and the ITI |
 
@@ -86,9 +91,10 @@ In `params.py`:
 - `P['fullScreen'] = False` shows the task in a window (useful for a first try).
 - `P['SCREEN_HEIGHT_PIX']` is the screen height in pixels as Psychtoolbox saw it (MacBook: 900).
   It keeps the stimuli the same size as in the MATLAB version.
-- `P['nMiniblocksPerVis']`, `P['testMiniblocksPerVis']`, `P['kinds']`, `P['testKinds']`: number of trials.
+- `P['nMiniblocksPerVis']`, `P['kinds']`: number of learning trials.
+- `P['testTrialsPerKind']`, `P['testMiniblocks']`, `P['deviantAwayFrom']`: the test phase.
 - `P['maskT2']`: whether T2 is followed by a mask.
-- `P['sideRule']`, `P['t2AwayFromMidline']`: rules for the duplets (then run `make_duplet_list.py`).
+- `P['sideRule']`, `P['t2AwayFromMidline']`, `P['t2NotNeighbours']`: rules for the duplets (then run `make_duplet_list.py`).
 
 ## Data
 
