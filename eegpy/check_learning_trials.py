@@ -10,7 +10,7 @@ from compute_transitions import compute_transitions
 
 def check_learning_trials(trials, kinds):
     nKinds = len(kinds)
-    typeNames = ['valid', 'omission', 'deviant']
+    typeNames = ['valid', 'omission']
     nMiniblocks = max(t['Miniblock_no'] for t in trials)
     ok = True
     print('')
