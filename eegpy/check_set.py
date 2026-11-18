@@ -39,6 +39,15 @@ def check_set(duplets, P):
     else:
         raise ValueError("P['sideRule'] must be 'crossed' or 'rightToLeft'")
 
+    # no two T2 positions of a set are neighbours
+    if P['t2NotNeighbours']:
+        T2s = [t2 for (t1, t2) in duplets]
+        for i in range(len(T2s)):
+            for k in range(i + 1, len(T2s)):
+                distance = abs(T2s[i] - T2s[k])
+                if distance == 1 or distance == n - 1:   # n - 1: positions 16 and 1 are neighbours too
+                    return False
+
     # no T2 directly next to the vertical midline (not possible with 'rightToLeft')
     if P['t2AwayFromMidline'] and P['sideRule'] != 'rightToLeft':
         midline = [1, n // 2, n // 2 + 1, n]
