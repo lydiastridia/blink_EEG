@@ -90,14 +90,17 @@ def get_params():
 
     # ---------------- Test phase ----------------
     # Number of trials of each kind in ONE test miniblock (together 52 -> 52 trials per miniblock).
-    # The trials of each kind are divided equally over the 4 duplets (so use multiples of 4).
+    # The trials of each kind (except random deviants) are divided equally over the 4 duplets
+    # (so use multiples of 4).
     #   valid    : T1 of a duplet, T2 at the predicted position (as in the learning phase)
     #   omission : T1 of a duplet, no T2 (as in the learning phase)
-    #   deviant  : T1 of a duplet, T2 at a random allowed position (see P['deviantAwayFrom'])
+    #   deviant       : T1 of a duplet, T2 at a random allowed position (see P['deviantAwayFrom'])
+    #   randomDeviant : T1 at a random position that is never a T1 (in either set), T2 at a random
+    #                   position that is not a predictive T2 of the set and not next to one
     # The order of the trials within a miniblock is random.
-    P['testTrialsPerKind'] = {'valid': 20, 'omission': 16, 'deviant': 16}
+    P['testTrialsPerKind'] = {'valid': 20, 'omission': 16, 'deviant': 8, 'randomDeviant': 8}
     P['testMiniblocks'] = 2                # test miniblocks in total; they alternate seen / unseen
-    # Where a deviant T2 may NOT appear (always also not where T1 was shown on that trial):
+    # Where the T2 of a deviant may NOT appear (always also not where T1 was shown on that trial):
     #   'predictedT2' : on or next to the predicted T2 of that trial's duplet
     #   'allT2'       : on or next to any of the four predictive T2s of the set
     P['deviantAwayFrom'] = 'allT2'
