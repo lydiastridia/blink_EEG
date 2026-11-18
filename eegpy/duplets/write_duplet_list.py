@@ -1,4 +1,5 @@
-"""Purpose: builds the list of all valid combinations of duplets and saves it as duplet_list.csv.
+"""Purpose: builds the list of all valid combinations of duplets and saves it as duplets/duplet_list.csv
+(the file name is in P['path']['dupletList']).
 
 Input:  P       settings (params.py)
 Output: nRows   number of combinations in the list
