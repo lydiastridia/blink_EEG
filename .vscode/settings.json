@@ -1,0 +1,13 @@
+{
+    "python.analysis.extraPaths": [
+        "eegpy",
+        "eegpy/calibration",
+        "eegpy/duplets",
+        "eegpy/general",
+        "eegpy/learning_phase",
+        "eegpy/responses",
+        "eegpy/screen",
+        "eegpy/test_phase",
+        "eegpy/trial"
+    ]
+}
