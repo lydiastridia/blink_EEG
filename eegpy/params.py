@@ -160,6 +160,6 @@ def get_params():
         'calibration': os.path.join(repoRoot, 'Data', 'Calibration'),
         'learning': os.path.join(repoRoot, 'Data', 'LearningPhase'),
         'test': os.path.join(repoRoot, 'Data', 'TestPhase'),
-        'dupletList': os.path.join(thisFolder, 'duplet_list.csv'),
+        'dupletList': os.path.join(thisFolder, 'duplets', 'duplet_list.csv'),
     }
     return P
