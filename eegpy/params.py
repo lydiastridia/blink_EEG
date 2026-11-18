@@ -67,7 +67,7 @@ def get_params():
     P['practiceContrasts'] = [0.03, 0.03, 0.03, 0.1, 0.1, 0.1]
 
     # ---------------- Learning phase ----------------
-    # 4 duplets and 1 omission kind -> 5 x 5 + 1 = 26 trials per miniblock: 80% duplets, 20% omissions
+    # 4 duplets and 1 omission kind -> 5 x 5 + 1 = 26 trials per miniblock folllowing de Bruijne: 80% duplets, 20% omissions
     P['nDuplets'] = 4
     P['kinds'] = ['duplet1', 'duplet2', 'duplet3', 'duplet4', 'omission']
     P['nMiniblocksPerVis'] = 2         # miniblocks per visibility (2 -> 4 miniblocks, 104 trials)
