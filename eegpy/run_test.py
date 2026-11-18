@@ -1,6 +1,6 @@
 """Purpose: main script of the test phase (PsychoPy version of runTest.m). Run this file to start.
-The test phase is the learning phase with deviant trials (P['testKinds']). It uses the same duplets
-as the learning phase, and continues with the mask contrasts at the end of the learning phase.
+The test phase uses the same duplets as the learning phase, with valid trials, omissions and deviants
+in the numbers of P['testTrialsPerKind'], and continues with the mask contrasts at the end of the learning phase.
 The learning phase must have been run before with the same participant ID and session.
 
 Output in Data/TestPhase:
@@ -14,15 +14,15 @@ import os
 from psychopy import core
 
 from abort_experiment import AbortExperiment
+from add_deviant_positions import add_deviant_positions
 from add_positions import add_positions
-from add_targets import add_targets
 from ask_participant_info import ask_participant_info
-from check_learning_trials import check_learning_trials
+from check_test_trials import check_test_trials
 from close_screen import close_screen
 from countdown import countdown
 from get_key import get_key
 from load_threshold import load_threshold
-from make_learning_trials import make_learning_trials
+from make_test_trials import make_test_trials
 from open_screen import open_screen
 from params import get_params
 from prep_stimuli import prep_stimuli
@@ -70,10 +70,10 @@ def main():
         pos = json.load(f)
 
     # trial list
-    trials = make_learning_trials(P['testKinds'], P['testMiniblocksPerVis'], info['idNumber'])
-    trials = add_targets(trials, P)
-    check_learning_trials(trials, P['testKinds'])
+    trials = make_test_trials(P, info['idNumber'])
     trials = add_positions(trials, pos)
+    trials = add_deviant_positions(trials, pos, P)
+    check_test_trials(trials, pos, P)
     nMiniblocks = max(t['Miniblock_no'] for t in trials)
 
     # ---------------------------------------------------------------- RUN
