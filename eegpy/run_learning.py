@@ -1,5 +1,4 @@
-"""Purpose: main script of the learning phase (PsychoPy version of runLearning.m). Run this file
-to start. The calibration must have been run before with the same participant ID and session.
+"""This is the Python version of the run_learnin.m that was developed in MATLAB
 
 Output in Data/LearningPhase:
     P<id>_positions.json               the duplets of this participant (made once, then loaded again)
