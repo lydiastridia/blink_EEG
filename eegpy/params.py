@@ -193,6 +193,8 @@ def get_params():
         'calibration': os.path.join(dataFolder, 'Calibration'),
         'learning': os.path.join(dataFolder, 'LearningPhase'),
         'test': os.path.join(dataFolder, 'TestPhase'),
+        'controlLearning': os.path.join(dataFolder, 'ControlLearning'),
+        'controlTest': os.path.join(dataFolder, 'ControlTest'),
         'dupletList': os.path.join(thisFolder, 'duplets', 'duplet_list.csv'),
     }
     return P
