@@ -16,7 +16,7 @@ eegpy/
     add_paths.py            adds the subfolders to Python's search path
     general/                participant details, threshold file, saving, the ESCAPE error
     screen/                 window, stimuli, drawing, timing in frames, texts
-    responses/              key presses: any key, ratings 1-4, letters
+    responses/              key presses: any key, ratings 1-4, letters; location with the mouse
     calibration/            calibration trial list, one calibration trial, convergence graph
     duplets/                rules for the duplets, the list of all valid combinations, choosing the duplets of a participant, positions of every trial
     trial/                  one learning/test trial on the screen, and the four questions after it
@@ -28,7 +28,7 @@ eegpy/
 
 **screen/**: `open_screen.py`, `find_positions.py`, `prep_mask.py`, `prep_stimuli.py`, `draw_fixation.py`, `draw_target.py`, `draw_mask.py`, `set_mask_contrast.py`, `show_frames.py`, `show_fixation.py`, `text_msg.py`, `countdown.py`, `close_screen.py`
 
-**responses/**: `get_key.py`, `get_rating.py`, `get_letter.py`
+**responses/**: `get_key.py`, `get_rating.py`, `get_letter.py`, `get_location_mouse.py`
 
 **calibration/**: `make_calib_trials.py`, `run_example_trial.py`, `run_calib_trial.py`, `plot_convergence.py`
 
@@ -43,7 +43,9 @@ eegpy/
 ## How to run
 
 1. In VS Code, with the Python 3.11 environment that has PsychoPy (or in the PsychoPy app, Coder view),
-   open `run_calibration.py` and press Run. Fill in the dialog box.
+   open `run_calibration.py` and press Run. Fill in the dialog box, including "Location answers":
+   keyboard (type the letter) or mouse (move the cursor onto the letter). The learning and test
+   phase use the same choice for this participant.
 2. Then `run_learning.py`, then `run_test.py`, with the same participant ID and session.
 
 ESCAPE stops a task at any question screen; the data so far are saved.
