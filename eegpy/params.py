@@ -153,13 +153,13 @@ def get_params():
                   'Press SPACE to continue.'),
     }
 
-    # ---------------- Data folders (inside the repository folder) ----------------
+    # ---------------- Data folders (in the folder Data on the desktop) ----------------
     thisFolder = os.path.dirname(os.path.abspath(__file__))
-    repoRoot = os.path.dirname(thisFolder)
+    dataFolder = os.path.join(os.path.expanduser('~'), 'Desktop', 'Data')
     P['path'] = {
-        'calibration': os.path.join(repoRoot, 'Data', 'Calibration'),
-        'learning': os.path.join(repoRoot, 'Data', 'LearningPhase'),
-        'test': os.path.join(repoRoot, 'Data', 'TestPhase'),
+        'calibration': os.path.join(dataFolder, 'Calibration'),
+        'learning': os.path.join(dataFolder, 'LearningPhase'),
+        'test': os.path.join(dataFolder, 'TestPhase'),
         'dupletList': os.path.join(thisFolder, 'duplets', 'duplet_list.csv'),
     }
     return P
