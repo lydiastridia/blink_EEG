@@ -1,5 +1,6 @@
 """Purpose: the four questions after a trial, then the ITI (letter version of the original code):
-1. '1?'      where was the first target? 16 letters are shown on the circle; type the letter
+1. '1?'      where was the first target? 16 letters are shown on the circle; type the letter,
+             or (P['responseMode'] = 'mouse') move the cursor from the centre onto the letter
 2. '2?'      where was the second target?
 3. 'Seen 1?' visibility of the first target (1-4)
 4. 'Seen 2?' visibility of the second target (1-4)
@@ -15,6 +16,7 @@ import random
 from psychopy import core
 
 from get_letter import get_letter
+from get_location_mouse import get_location_mouse
 from get_rating import get_rating
 from show_fixation import show_fixation
 from text_msg import text_msg
@@ -23,7 +25,7 @@ from text_msg import text_msg
 def run_questions(D, P, trial):
     letters = list(P['letters'])
     random.shuffle(letters)   # letters[0] is shown at position 1, letters[1] at position 2, ...
-    result = {'letters': ''.join(letters)}
+    result = {'letters': ''.join(letters), 'responseMode': P['responseMode']}
 
     # questions 1 and 2: the locations
     for targeti in (1, 2):
@@ -34,9 +36,14 @@ def run_questions(D, P, trial):
         D['centreText'].draw()
         D['win'].flip()
 
-        letter, RT = get_letter(letters)
+        if P['responseMode'] == 'mouse':
+            position, RT = get_location_mouse(D)
+            letter = letters[position - 1]          # the letter at that position
+        else:
+            letter, RT = get_letter(letters)
+            position = letters.index(letter) + 1    # the position of that letter
         result['T%dletter' % targeti] = letter
-        result['T%danswer' % targeti] = letters.index(letter) + 1   # the position of that letter
+        result['T%danswer' % targeti] = position
         result['T%danswerRT' % targeti] = RT
         core.wait(P['afterResponse'])
 
