@@ -6,7 +6,7 @@ If you add a new subfolder, add its name to the list below.
 import os
 import sys
 
-folders = ['calibration', 'duplets', 'general', 'learning_phase', 'responses', 'screen', 'test_phase', 'trial']
+folders = ['calibration', 'control', 'duplets', 'general', 'learning_phase', 'responses', 'screen', 'test_phase', 'trial']
 
 
 def add_paths():
