@@ -119,6 +119,21 @@ def get_params():
                       'Press 1 only if you had no impression at all.\n\n'
                       'Please keep your eyes on the central cross.\n\n'
                       'Press SPACE to continue.'),
+        'example1': 'Example trial\n\nKeep your eyes on this cross.\n\n(SPACE)',
+        'example2': ('This is the square you are looking for (circled here).\n'
+                     'It flashes at ONE of the positions around the cross,\n'
+                     'for only a fraction of a second.\n\n(SPACE)'),
+        'example3': ('Right after the square, these rectangles appear\n'
+                     'around ALL positions. They are NOT the square:\n'
+                     'they can make the square hard to see.\n\n(SPACE)'),
+        'example4': ('Here both are shown together: the square sits in the gap\n'
+                     'between four rectangles. In the real task the square comes\n'
+                     'first and disappears before the rectangles appear.\n\n(SPACE)'),
+        'example5': ('Then you rate how well you saw the square:\n\n'
+                     '1 = I did not see anything\n'
+                     '2 = I saw a brief glimpse, but I am not sure\n'
+                     '3 = I saw the square, but only weakly\n'
+                     '4 = I clearly saw the square\n\n(SPACE)'),
         'practice': ('Practice\n\nA few practice trials at normal speed.\n'
                      'Answer with the keys 1 to 4.\n\nPress SPACE to start.'),
         'calibStart': ('The task now starts.\n\nIt takes about 5 minutes.\n'
