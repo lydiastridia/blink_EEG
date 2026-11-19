@@ -1,11 +1,11 @@
 # eegpy: PsychoPy version
 
-The same three tasks as the MATLAB version, written for PsychoPy (free, no licence needed),
+The same three tasks as the MATLAB version, written for PsychoPy and updated,
 plus two control tasks: the learning and test phase without anything to learn.
 
-One function per file; the file has the same name as the function. The start files are at the top;
-the functions are in subfolders. `add_paths.py` makes the subfolders available to the start files
-(like `addpath` in MATLAB).
+Usually one function per file; the file has the same name as the function. 
+The start files are at the top, the functions are in subfolders. 
+`add_paths.py` makes the subfolders available to the start files.
 
 ```
 eegpy/
@@ -16,10 +16,10 @@ eegpy/
     run_control_test.py     start: control test phase (as the test phase, random T1-T2 pairs)
     make_duplet_list.py     start: makes duplets/duplet_list.csv (after changing a duplet rule)
     params.py               all settings
-    add_paths.py            adds the subfolders to Python's search path
-    general/                participant details, threshold file, saving, the ESCAPE error
-    screen/                 window, stimuli, drawing, timing in frames, texts
-    responses/              key presses: any key, ratings 1-4, letters; location with the mouse
+    add_paths.py            adds the subfolders to python
+    general/                participant details, threshold file, saving + the ESCAPE error
+    screen/                 window, stimuli, drawing, timing in frames (to be changed probably), texts
+    responses/              key presses: any key, ratings 1-4, letters; also added the option to indicate the location with the mouse -> still to decide on how much time the cursor needs to be above to decide between hovering and selection
     calibration/            calibration trial list, one calibration trial, convergence graph
     duplets/                rules for the duplets, the list of all valid combinations, choosing the duplets of a participant, positions of every trial
     trial/                  one learning/test trial on the screen, and the four questions after it
@@ -48,13 +48,10 @@ eegpy/
 
 ## How to run
 
-1. In VS Code, with the Python 3.11 environment that has PsychoPy (or in the PsychoPy app, Coder view),
-   open `run_calibration.py` and press Run. Fill in the dialog box, including "Location answers":
-   keyboard (type the letter) or mouse (move the cursor onto the letter). The learning and test
-   phase use the same choice for this participant.
+1. `run_calibration.py` in python 3.11 with psychopy
 2. Then `run_learning.py`, then `run_test.py`, with the same participant ID and session.
 3. The control tasks: `run_control_learning.py`, then `run_control_test.py`, also with the same
-   ID and session (they need the calibration, not the learning or test phase).
+   ID and session (we still need to discuss this tho)
 
 ESCAPE stops a task at any question screen; the data so far are saved.
 
@@ -65,16 +62,13 @@ In `params.py`:
 - `P['fullScreen'] = False` shows the task in a window (useful for a first try).
 - `P['SCREEN_HEIGHT_PIX']` is the screen height in pixels as Psychtoolbox saw it (MacBook: 900).
   It keeps the stimuli the same size as in the MATLAB version.
-- `P['nMiniblocksPerVis']`, `P['kinds']`: number of learning trials.
-- `P['testTrialsPerKind']`, `P['testMiniblocks']`, `P['deviantAwayFrom']`: the test phase.
-- `P['maskT2']`: whether T2 is followed by a mask.
+- `P['nMiniblocksPerVis']`, `P['kinds']`: number of learning trials -> adjustable in params
+- `P['testTrialsPerKind']`, `P['testMiniblocks']`, `P['deviantAwayFrom']`: the test phase
+
 - `P['sideRule']`, `P['t2AwayFromMidline']`, `P['t2NotNeighbours']`: rules for the duplets (then run `make_duplet_list.py`).
 
-VS Code may show yellow lines under the imports of the start files if it does not know the subfolders.
-The file `.vscode/settings.json` tells it where to look; the code runs either way.
 
 ## Data
 
 Saved in the folder `Data` on the desktop (`~/Desktop/Data`), as `.json` (everything) and `.csv` (one row per trial).
-The files are separate from those of the MATLAB version (`.mat`): a calibration done in MATLAB
-cannot be used here, and the other way round.
++ the convergence graph
