@@ -23,6 +23,7 @@ from params import get_params
 from plot_convergence import plot_convergence
 from prep_stimuli import prep_stimuli
 from run_calib_trial import run_calib_trial
+from run_example_trial import run_example_trial
 from save_data import save_data
 from text_msg import text_msg
 
@@ -56,6 +57,9 @@ def main():
     try:
         text_msg(D, P['text']['calibInst'])
         get_key(['space'])
+
+        # ---- example trial (slow, with explanations)
+        run_example_trial(D, P)
 
         # ---- practice trials (weak masks)
         text_msg(D, P['text']['practice'])
