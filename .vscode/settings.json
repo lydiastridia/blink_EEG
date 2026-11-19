@@ -2,7 +2,6 @@
     "python.analysis.extraPaths": [
         "eegpy",
         "eegpy/calibration",
-        "eegpy/control",
         "eegpy/duplets",
         "eegpy/general",
         "eegpy/learning_phase",
