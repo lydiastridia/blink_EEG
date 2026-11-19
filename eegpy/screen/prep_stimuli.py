@@ -1,10 +1,10 @@
 """Purpose: makes all stimuli once, before the task starts, and stores them in D:
-the fixation cross, the target, the mask, the text in the centre and the 16 letters.
+the fixation cross, the target, the mask, the text in the centre, the 16 letters and the mouse.
 
 Input:  D   screen (open_screen)
 Output: D   the same dictionary, now also with the stimuli
 """
-from psychopy import visual
+from psychopy import event, visual
 
 from find_positions import find_positions
 from prep_mask import prep_mask
@@ -41,4 +41,7 @@ def prep_stimuli(D):
     for xy in positions:
         D['letters'].append(visual.TextStim(win, text='', pos=xy, height=P['letterSize'] * pix,
                                             color=P['textColor'], colorSpace='rgb255'))
+
+    # mouse (only used when the locations are answered with the mouse); hidden until then
+    D['mouse'] = event.Mouse(visible=False, win=win)
     return D
