@@ -30,7 +30,7 @@ eegpy/
 
 **responses/**: `get_key.py`, `get_rating.py`, `get_letter.py`
 
-**calibration/**: `make_calib_trials.py`, `run_calib_trial.py`, `plot_convergence.py`
+**calibration/**: `make_calib_trials.py`, `run_example_trial.py`, `run_calib_trial.py`, `plot_convergence.py`
 
 **duplets/**: `jump_size.py`, `check_set.py`, `valid_sets.py`, `build_duplet_list.py`, `rules_label.py`, `write_duplet_list.py`, `read_duplet_list.py`, `make_positions.py`, `add_positions.py`, `duplet_list.csv`
 
