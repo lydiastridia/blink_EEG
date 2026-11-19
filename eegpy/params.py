@@ -87,6 +87,11 @@ def get_params():
 
     # Questions
     P['letters'] = 'aefgiklmorsuwxyz'  # 16 letters, shuffled on every trial
+    # How the locations are answered: 'keyboard' (type the letter) or 'mouse' (move the cursor
+    # from the centre onto the letter; it counts as soon as the cursor reaches it, as in the
+    # original code). It is chosen per participant in the calibration dialog and then used in
+    # the learning and test phase; this value is only used if no choice was saved.
+    P['responseMode'] = 'keyboard'
 
     # ---------------- Test phase ----------------
     # Number of trials of each kind in ONE test miniblock (together 52 -> 52 trials per miniblock).
@@ -156,6 +161,19 @@ def get_params():
                       'Press 1 only if you had no impression at all.\n\n'
                       'Please keep your eyes on the central cross.\n\n'
                       'Press SPACE to continue.'),
+        'learnInstMouse': ('In this task, two small grey squares flash one after the other,\n'
+                           'each at one of the positions around the central cross.\n'
+                           'Sometimes one of the two squares is missing.\n\n'
+                           'After each trial you answer four questions:\n\n'
+                           '1?  Where was the first square? Move the mouse onto the letter at its position.\n'
+                           '2?  Where was the second square? Move the mouse onto the letter at its position.\n'
+                           '(The mouse starts in the centre; your answer counts as soon as it reaches a letter.)\n'
+                           'Seen 1?  How well did you see the first square (keys 1 to 4)?\n'
+                           'Seen 2?  How well did you see the second square (keys 1 to 4)?\n\n'
+                           'If you did not see a square, follow your gut feeling and guess its position.\n'
+                           'Press 1 only if you had no impression at all.\n\n'
+                           'Please keep your eyes on the central cross.\n\n'
+                           'Press SPACE to continue.'),
         'testInst': 'The task continues in the same way as before.\n\nPress SPACE to continue.',
         'seenBlock': ('In this block, you will be able to see the targets.\n'
                       'Do your best to identify the locations correctly afterwards.\n\n'
