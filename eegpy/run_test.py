@@ -58,6 +58,12 @@ def main():
     threshold = load_threshold(P, info)
     if threshold is None:
         return
+
+    # how the locations are answered (keyboard or mouse): the choice made in the calibration
+    P['responseMode'] = threshold['participant'].get('responseMode', P['responseMode'])
+    info['responseMode'] = P['responseMode']
+    print('Location answers: %s' % P['responseMode'])
+
     if os.path.isfile(learningFile):
         with open(learningFile) as f:
             contrast = json.load(f)['contrastNow']
