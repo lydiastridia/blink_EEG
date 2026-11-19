@@ -125,9 +125,12 @@ def main():
                 else:
                     nWrong = nWrong + sum(1 for r in ratings if r > 1)    # seen in an unseen miniblock
                 if nWrong >= P['nWrongAllowed']:
-                    contrast[vis] = min(1.0, contrast[vis] * correction)
+                    # between the floor (P['maskContrastMin']) and the ceiling (1), as in the manuscript
+                    contrast[vis] = min(1.0, max(P['maskContrastMin'], contrast[vis] * correction))
                     nWrong = 0
                     print('Adjusting mask contrast')
+                    if contrast[vis] == P['maskContrastMin']:
+                        print('WARNING: the %s mask contrast has reached the floor (%.2f).' % (vis, P['maskContrastMin']))
 
                 if P['testMode']:
                     print('   miniblock %d (%s) trial %d | %s | T1 %d T2 %d | answers %d %d | seen %d %d | mask %.3f'
