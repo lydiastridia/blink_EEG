@@ -65,6 +65,6 @@ The file `.vscode/settings.json` tells it where to look; the code runs either wa
 
 ## Data
 
-Saved in the `Data` folder next to this folder, as `.json` (everything) and `.csv` (one row per trial).
+Saved in the folder `Data` on the desktop (`~/Desktop/Data`), as `.json` (everything) and `.csv` (one row per trial).
 The files are separate from those of the MATLAB version (`.mat`): a calibration done in MATLAB
 cannot be used here, and the other way round.
