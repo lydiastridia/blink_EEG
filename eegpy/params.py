@@ -84,6 +84,7 @@ def get_params():
     P['nWrongAllowed'] = 2
     P['correctionSeen'] = 0.95         # seen miniblocks: mask contrast - 5% (manuscript)
     P['correctionUnseen'] = 1.05       # unseen miniblocks: mask contrast + 5%
+    P['maskContrastMin'] = 0.03        # floor: the mask never gets weaker than this (manuscript); the ceiling is 1
 
     # Questions
     P['letters'] = 'aefgiklmorsuwxyz'  # 16 letters, shuffled on every trial
