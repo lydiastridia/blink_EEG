@@ -1,11 +1,5 @@
 """Purpose: main script of the calibration task (PsychoPy version of runCalibration.m).
-Run this file to start. Two interleaved staircases find the mask contrast at which the target
-is seen about half of the time. The staircase rules are those of the original code.
 
-Output in Data/Calibration:
-    P<id>_S<session>_calibration.json / .csv   all trials
-    P<id>_S<session>_threshold.json            threshold and the two contrasts for the main task
-    P<id>_S<session>_convergence.png           convergence graph
 ESCAPE stops the task; the data collected so far are saved.
 """
 import json
