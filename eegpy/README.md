@@ -11,6 +11,8 @@ eegpy/
     run_calibration.py      start: calibration
     run_learning.py         start: learning phase
     run_test.py             start: test phase
+    run_control_learning.py start: control learning phase (as the learning phase, random T1-T2 pairs)
+    run_control_test.py     start: control test phase (as the test phase, random T1-T2 pairs)
     make_duplet_list.py     start: makes duplets/duplet_list.csv (after changing a duplet rule)
     params.py               all settings
     add_paths.py            adds the subfolders to python
@@ -22,6 +24,7 @@ eegpy/
     trial/                  one learning/test trial on the screen, and the four questions after it
     learning_phase/         trial list of the learning phase (serially balanced miniblocks) and its check
     test_phase/             trial list of the test phase, deviant positions, and its check
+    control/                trial lists of the two control tasks, random balanced positions, and their check
 ```
 
 **general/**: `abort_experiment.py`, `ask_participant_info.py`, `load_threshold.py`, `save_data.py`
@@ -40,10 +43,14 @@ eegpy/
 
 **test_phase/**: `make_test_trials.py`, `longest_run.py`, `deviant_keep_clear.py`, `allowed_deviant_positions.py`, `allowed_random_T1_positions.py`, `add_deviant_positions.py`, `check_test_trials.py`
 
+**control/**: `balanced_positions.py`, `make_control_learning_trials.py`, `make_control_test_trials.py`, `add_random_positions.py`, `check_control_trials.py`
+
 ## How to run
 
 1. `run_calibration.py` in python 3.11 with psychopy
 2. Then `run_learning.py`, then `run_test.py`, with the same participant ID and session.
+3. The control tasks: `run_control_learning.py`, then `run_control_test.py`, with the same ID and session
+   (they only need the calibration; when they are run is still to be decided).
 
 ESCAPE stops a task at any question screen; the data so far are saved.
 
