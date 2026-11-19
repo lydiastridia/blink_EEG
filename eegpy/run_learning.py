@@ -56,6 +56,11 @@ def main():
         return
     contrast = {'seen': threshold['contrastSeen'], 'unseen': threshold['contrastUnseen']}
 
+    # how the locations are answered (keyboard or mouse): the choice made in the calibration
+    P['responseMode'] = threshold['participant'].get('responseMode', P['responseMode'])
+    info['responseMode'] = P['responseMode']
+    print('Location answers: %s' % P['responseMode'])
+
     # positions: made once per participant and saved, afterwards always loaded
     if os.path.isfile(positionFile):
         with open(positionFile) as f:
@@ -80,7 +85,10 @@ def main():
     D = prep_stimuli(D)
     aborted = False
     try:
-        text_msg(D, P['text']['learnInst'])
+        if P['responseMode'] == 'mouse':
+            text_msg(D, P['text']['learnInstMouse'])
+        else:
+            text_msg(D, P['text']['learnInst'])
         get_key(['space'])
 
         for miniblocki in range(1, nMiniblocks + 1):
