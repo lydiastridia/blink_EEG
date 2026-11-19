@@ -30,7 +30,7 @@ from text_msg import text_msg
 
 def main():
     P = get_params()
-    info = ask_participant_info('Calibration')
+    info = ask_participant_info('Calibration', askResponseMode=True)
     if info is None:
         return
     name = 'P%s_S%d' % (info['id'], info['session'])
