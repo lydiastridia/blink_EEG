@@ -64,7 +64,10 @@ In `params.py`:
 - `P['nMiniblocksPerVis']`, `P['kinds']`: number of learning trials -> adjustable in params
 - `P['testTrialsPerKind']`, `P['testMiniblocks']`, `P['deviantAwayFrom']`: the test phase
 
-- `P['sideRule']`, `P['t2AwayFromMidline']`, `P['t2NotNeighbours']`: rules for the duplets (then run `make_duplet_list.py`).
+- `P['dupletSetA']`, `P['dupletSetB']`: the 8 duplets, the same for all participants. Participant numbers 1, 2, 5, 6, ... see set A,
+  3, 4, 7, 8, ... see set B; odd numbers start with a seen miniblock, even numbers with an unseen one.
+- `P['sideRule']`, `P['t2AwayFromMidline']`, `P['t2NotNeighbours']`: rules the two sets are checked against
+  (`make_duplet_list.py` lists all combinations that meet them, to choose other sets from).
 
 
 ## Data
