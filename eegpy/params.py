@@ -73,9 +73,19 @@ def get_params():
     P['nMiniblocksPerVis'] = 2         # miniblocks per visibility (2 -> 4 miniblocks, 104 trials)
     P['maskT2'] = True                 # T2 is followed by the same mask as T1
 
-    # Duplets: the tasks pick one row of duplet_list.csv at random for every new participant.
-    # After changing one of these rules, run make_duplet_list.py to make the list again.
-    P['sideRule'] = 'crossed'          # 'crossed'    : one duplet each right->right, left->left, right->left, left->right
+    # Duplets: the same 8 duplets for all participants, as (T1, T2). Set A is seen and set B unseen
+    # for half of the participants, and the other way round for the other half (make_positions):
+    #   idNumber 1, 5, 9, ...  : A seen, first miniblock seen
+    #   idNumber 2, 6, 10, ... : A seen, first miniblock unseen
+    #   idNumber 3, 7, 11, ... : B seen, first miniblock seen
+    #   idNumber 4, 8, 12, ... : B seen, first miniblock unseen
+    # Both sets meet all rules below and have the same jump sizes (3, 4, 5 and 6 positions).
+    P['dupletSetA'] = [(1, 4), (7, 13), (10, 6), (16, 11)]
+    P['dupletSetB'] = [(2, 12), (8, 5), (9, 14), (15, 3)]
+
+    # Rules for the duplets: the two sets above are checked against them at the start of the task.
+    # duplet_list.csv (make_duplet_list.py) lists all combinations that meet them, to choose sets from.
+    P['sideRule'] = 'crossed'         # 'crossed'    : one duplet each right->right, left->left, right->left, left->right
                                        # 'rightToLeft': every T1 on the right, every T2 on the left (original sequence file)
     P['t2AwayFromMidline'] = True      # no T2 at positions 1, 8, 9, 16 (next to the vertical midline); only with 'crossed'
     P['t2NotNeighbours'] = True        # no two T2 positions of a set are next to each other
