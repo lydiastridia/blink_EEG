@@ -27,6 +27,7 @@ from close_screen import close_screen
 from countdown import countdown
 from get_key import get_key
 from load_threshold import load_threshold
+from make_positions import make_positions
 from make_test_trials import make_test_trials
 from open_screen import open_screen
 from params import get_params
@@ -50,7 +51,6 @@ def main():
         os.makedirs(folder)
     name = 'P%s_S%d' % (info['id'], info['session'])
     dataFile = os.path.join(folder, name + '_test')
-    positionFile = os.path.join(P['path']['learning'], 'P%s_positions.json' % info['id'])
     learningFile = os.path.join(P['path']['learning'], name + '_learning.json')
 
     # mask contrasts: those at the end of the learning phase
@@ -73,12 +73,9 @@ def main():
         print('WARNING: no learning file found; the contrasts from the calibration are used.')
         contrast = {'seen': threshold['contrastSeen'], 'unseen': threshold['contrastUnseen']}
 
-    # positions: the same as in the learning phase
-    if not os.path.isfile(positionFile):
-        print('No positions found for this participant. Run the learning phase first.')
-        return
-    with open(positionFile) as f:
-        pos = json.load(f)
+    # positions: the same fixed duplet sets as in the learning phase
+    pos = make_positions(P, info['idNumber'])
+    print('Set %s is seen, set %s is unseen.' % (pos['seenSet'], pos['unseenSet']))
 
     # trial list
     trials = make_test_trials(P, info['idNumber'])
