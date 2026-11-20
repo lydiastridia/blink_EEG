@@ -1,7 +1,7 @@
 """This is the Python version of the run_learnin.m that was developed in MATLAB
 
 Output in Data/LearningPhase:
-    P<id>_positions.json               the duplets of this participant (made once, then loaded again)
+    P<id>_positions.json               the duplets of this participant (which set is seen and unseen)
     P<id>_S<session>_learning.json     all data
     P<id>_S<session>_learning.csv      one row per trial
 ESCAPE stops the task; the data collected so far are saved.
@@ -61,16 +61,12 @@ def main():
     info['responseMode'] = P['responseMode']
     print('Location answers: %s' % P['responseMode'])
 
-    # positions: made once per participant and saved, afterwards always loaded
-    if os.path.isfile(positionFile):
-        with open(positionFile) as f:
-            pos = json.load(f)
-        print('Positions of this participant loaded.')
-    else:
-        # no file yet: make new positions
-        pos = make_positions(P, info['idNumber'])
-        with open(positionFile, 'w') as f:
-            json.dump(pos, f, indent=1)
+    # positions: the fixed duplet sets from params.py (which set is seen depends on the participant
+    # number); saved as a record of this participant's duplets
+    pos = make_positions(P, info['idNumber'])
+    with open(positionFile, 'w') as f:
+        json.dump(pos, f, indent=1)
+    print('Set %s is seen, set %s is unseen.' % (pos['seenSet'], pos['unseenSet']))
 
     # trial list
     trials = make_learning_trials(P['kinds'], P['nMiniblocksPerVis'], info['idNumber'])
