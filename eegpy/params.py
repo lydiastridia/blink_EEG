@@ -186,13 +186,6 @@ def get_params():
                            'Please keep your eyes on the central cross.\n\n'
                            'Press SPACE to continue.'),
         'testInst': 'The task continues in the same way as before.\n\nPress SPACE to continue.',
-        'seenBlock': ('In this block, you will be able to see the targets.\n'
-                      'Do your best to identify the locations correctly afterwards.\n\n'
-                      'Press SPACE to start.'),
-        'unseenBlock': ('In this block, you will probably not see the targets.\n'
-                        'Do not get frustrated by this, it happens on purpose!\n'
-                        'Please try your best to guess the location.\n\n'
-                        'Press SPACE to start.'),
         'break': ('Good job! Remaining number of blocks: %d\n\nTake a short break.\n\n'
                   'Press SPACE to continue.'),
     }
