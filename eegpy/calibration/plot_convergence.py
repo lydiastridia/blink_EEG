@@ -1,5 +1,6 @@
 """Purpose: draws the convergence graph of the calibration: the mask contrast of both staircases
-over the calibration trials. Open circles mark the reversals; the dashed line is the threshold,
+over the calibration trials.
+The open circles mark the reversals and the dashed line is the threshold,
 the dotted lines are the mask contrasts for the main task. The graph is saved as a .png file.
 
 Input:  fileName           where to save the picture
