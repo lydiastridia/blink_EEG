@@ -97,14 +97,12 @@ def main():
             block = [t for t in trials if t['Miniblock_no'] == miniblocki]
             vis = block[0]['visibility']   # 'seen' or 'unseen'
 
-            # instruction of this miniblock, and correction factor for the mask contrast
+            # correction factor for the mask contrast (participants are not told whether the
+            # miniblock is seen or unseen)
             if vis == 'seen':
-                text_msg(D, P['text']['seenBlock'])
                 correction = P['correctionSeen']
             else:
-                text_msg(D, P['text']['unseenBlock'])
                 correction = P['correctionUnseen']
-            get_key(['space'])
             countdown(D)
             nWrong = 0   # number of ratings that do not fit this miniblock
 
