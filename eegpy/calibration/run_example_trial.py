@@ -1,7 +1,5 @@
-"""Purpose: shows a slow example trial with explanations (SPACE moves on), as runExampleTrial.m
-of the MATLAB version. The square and the mask stay on the screen, and a red circle shows the
-square, so participants know exactly what to look for. The texts are in params.py
-(P['text']['example1'] to P['text']['example5']).
+"""Purpose: this shows an example with explanations so that participants get a closer idea about what to expect, 
+this is an optional file and can easily be removed
 
 Input:  D   screen with stimuli (prep_stimuli)
         P   settings (params.py)
