@@ -2,8 +2,6 @@
 
 The calibration is very similar to the manuscript, I mainly tweaked around some of the contradictions between the code and the manuscript + the encountered errors.
 
-## How to run
-Open MATLAB in this folder and type `runCalibration`. Settings (number of trials, staircase steps, colours, timing) are all in `calibParams.m`.
 
 ## Files (one function per file, written in the style of the original nonconSeq code)
 | File | What it does | Original code |
@@ -15,7 +13,7 @@ Open MATLAB in this folder and type `runCalibration`. Settings (number of trials
 | `findPositions.m` | Screen positions of the 16 targets | `findPositions.m` |
 | `prepMask.m` | Screen positions of the mask rectangles | `nonconSeq_prepMask.m` |
 | `runTrial.m` | One trial: fixation, target, ISI, mask, rating, ITI | `nonconSeq_doTrials_cal.m` |
-| `runExampleTrial.m` | Slow example trial with explanations | (new) |
+| `runExampleTrial.m` | Slow example trial with explanations |  |
 | `drawFixation.m`, `drawTarget.m`, `drawMask.m` | Drawing | `nonconSeq_stimulus_cal.m` |
 | `textMsg.m` | Shows a text on the screen | `textMsg.m` |
 | `getKey.m` | Waits for a specific key | `getKey.m` |
