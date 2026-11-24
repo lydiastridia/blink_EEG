@@ -1,8 +1,5 @@
 """Purpose: makes duplets/duplet_list.csv: all combinations of duplets that pass the rules in params.py.
 
-Run this once after changing a rule for the duplets (P['sideRule'], P['t2AwayFromMidline'],
-P['t2NotNeighbours'], or the checks in check_set.py). The tasks pick one row of the list at random
-for every new participant.
 """
 from add_paths import add_paths
 
