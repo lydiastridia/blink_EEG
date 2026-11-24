@@ -1,8 +1,8 @@
 # eegpy: PsychoPy version
 
-The same three tasks as the MATLAB version, written for PsychoPy and updated.
+The same three tasks as the MATLAB version but written in Python + the control task and other updates
 
-Usually one function per file; the file has the same name as the function. 
+Usually one function per file and the file has the same name as the function. 
 The start files are at the top, the functions are in subfolders. 
 `add_paths.py` makes the subfolders available to the start files.
 
