@@ -1,7 +1,7 @@
 """Purpose: all settings of the three tasks (calibration, learning phase, test phase).
 
 The values are the same as in calibParams.m and mainParams.m of the MATLAB version.
-Sizes are given in pixels as Psychtoolbox saw the screen (see SCREEN_HEIGHT_PIX).
+Sizes are given in pixels as Psychtoolbox saw the screen (see SCREEN_HEIGHT_PIX) but can be adjusted as we pilot.
 """
 import os
 
